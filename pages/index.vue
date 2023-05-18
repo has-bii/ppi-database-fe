@@ -1,6 +1,6 @@
 <template>
-    <b-row class="mt-4">
-        <b-col lg="9">
+    <b-row class="mt-4 flex-grow-1" style="background-color: red;">
+        <b-col lg="9" style="background-color: blue;">
             <div class="card text-center mb-4">
                 <div class="card-body">
                     <h1 style="font-weight: 600;">Selamat datang di PPI Karabük Database</h1>

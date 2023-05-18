@@ -1,10 +1,78 @@
 <template>
     <b-container fluid>
+
         <b-row class="vh-100">
 
-            <b-col xl="2" style="background: #1D1D1D; color: white;">
+            <!-- Sidebar -->
+            <b-col class="px-0 py-4 sidenav d-none d-lg-block">
+                <div class="h-100 d-flex flex-column">
+                    <b-row align-h="center">
+                        <b-col cols="10" class="px-0">
+                            <div class="d-flex flex-row">
+                                <b-img src="/logo/Logo_white.svg"></b-img>
+                                <div class="brand-text ml-3 d-flex align-items-center fs-3">PPI Karabük</div>
+                                <!-- <b-icon icon="list" class="ml-auto" style="color: white;"></b-icon> -->
+                            </div>
+                        </b-col>
+                    </b-row>
+                    <b-row align-h="center" class="flex-grow-1">
+                        <b-col style="margin-top: 4rem;">
+                            <div class="d-flex flex-column mb-5 pl-3">
+                                <b-link v-if="this.$route.name == 'index'" class="p-1 my-2 nav-side-link fs-4"
+                                    style="border-right: 4px solid #FFFF; font-weight: 600;">
+                                    <b-icon icon="house-fill" class="mr-3 icon-nav"></b-icon>Dashboard
+                                </b-link>
+                                <b-link v-else :to="{ name: 'index' }" class="p-1 my-2 nav-side-link fs-4">
+                                    <b-icon icon="house" class="mr-3 icon-nav"></b-icon>Dashboard
+                                </b-link>
+                                <b-link
+                                    v-if="this.$route.name == 'database-insert' || this.$route.name == 'database-insert-2' || this.$route.name == 'database-insert-3'"
+                                    class="p-1 my-2 nav-side-link fs-4"
+                                    style="border-right: 4px solid #FFFF; font-weight: 600;">
+                                    <b-icon icon="file-earmark-plus-fill" class="mr-3 icon-nav"></b-icon>Database
+                                </b-link>
+                                <b-link v-else :to="{ name: 'database-insert' }" class="p-1 my-2 nav-side-link fs-4">
+                                    <b-icon icon="file-earmark-plus" class="mr-3 icon-nav"></b-icon>Database
+                                </b-link>
+                            </div>
+                        </b-col>
+                    </b-row>
 
-                <!-- Sidebar -->
+                    <hr class="sidebar-divider">
+
+                    <b-row>
+                        <b-col>
+                            <div class="d-flex flex-column mb-3 pl-3">
+                                <b-link class="p-2 nav-side-link fs-4"><b-icon icon="gear"
+                                        class="mr-3 icon-nav"></b-icon>Settings</b-link>
+                                <b-link class="p-2 nav-side-link fs-4" @click="logout">
+                                    <b-icon icon="box-arrow-right" class="mr-3 icon-nav"></b-icon>Logout</b-link>
+                            </div>
+                        </b-col>
+                    </b-row>
+                </div>
+            </b-col>
+
+            <b-col xl="10" lg="9" class="h-100 d-flex flex-column" style="background-color: #1D1D1D;">
+
+                <b-row class="flex-grow-1" style="background-color: #F5F5F5; border-radius: 2rem; margin: 1.5em 0;">
+
+                    <b-col cols="auto" class="px-0">
+
+                        <div class="card-shadow p-5 text-center mt-4 ml-4"
+                            style="background-color: #ffffff; border-radius: 2rem;">
+                            <h4>Test</h4>
+                        </div>
+
+                    </b-col>
+
+                </b-row>
+
+            </b-col>
+
+            <!-- Sidebar -->
+            <!-- <b-col xl="2" style="background: #1D1D1D; color: white;">
+
                 <div class="brand my-3 px-3 d-flex align-items-center justify-content-center">
                     <b-img src="/logo/Logo_white.svg"></b-img>
                     <div class="brand-text mx-3">PPI Karabük</div>
@@ -62,70 +130,7 @@
                         </span>
                     </b-list-group-item>
                 </b-list-group>
-            </b-col>
-
-            <b-col xl="10" style="background: #F5F5F5;">
-
-                <!-- Navbar -->
-                <b-navbar sticky class="navbar-border">
-                    <b-navbar-nav>
-                        <h1 style="font-weight: 700;">{{ this.$route.name == `index` ? `Dashboard` : `Isi Database` }}</h1>
-                    </b-navbar-nav>
-
-                    <b-navbar-nav class="ml-auto">
-                        <b-img v-if="this.$auth.user.student.photo == null" src="/img/dummy-profile-pic.png"
-                            rounded="circle" style="width: 3.4rem; height: 3.4rem; object-fit: cover;">
-                        </b-img>
-                        <b-img v-else :src="url + this.$auth.user.student.photo" rounded="circle"
-                            style="width: 3.4rem; height: 3.4rem; object-fit: cover;">
-                        </b-img>
-                        <b-row class="pl-3">
-                            <b-col>
-                                <b-nav-item-dropdown right>
-                                    <!-- Using 'button-content' slot -->
-                                    <template #button-content>
-                                        <a style="font-weight: 600; color: #1D1D1D; font-size: 1.4rem; padding: 0;">
-                                            {{ name }}
-                                        </a>
-                                    </template>
-                                    <b-dropdown-item href="#">Profile</b-dropdown-item>
-                                    <b-dropdown-item @click="logout">Sign
-                                        Out</b-dropdown-item>
-                                </b-nav-item-dropdown>
-                                <b-nav-text class="py-0" style="font-weight: 500; color: #9E9E9E;">{{ role }}</b-nav-text>
-                            </b-col>
-                        </b-row>
-                    </b-navbar-nav>
-                </b-navbar>
-
-                <!-- Widgets -->
-                <!-- <b-row class="mt-4">
-                    <b-col lg="3">
-                        <div class="py-3 px-4 card text-center" style="border: 0; border-radius: 0; min-height: 20rem;">
-                            <h1>Widget 1</h1>
-                        </div>
-                    </b-col>
-                    <b-col lg="3">
-                        <div class="py-3 px-4 card text-center" style="border: 0; border-radius: 0;">
-                            <h1>Widget 2</h1>
-                        </div>
-                    </b-col>
-                    <b-col lg="3">
-                        <div class="py-3 px-4 card text-center" style="border: 0; border-radius: 0;">
-                            <h1>Widget 3</h1>
-                        </div>
-                    </b-col>
-                    <b-col lg="3">
-                        <div class="py-3 px-4 card text-center" style="border: 0; border-radius: 0;">
-                            <h1>Widget 4</h1>
-                        </div>
-                    </b-col>
-                </b-row> -->
-
-                <!-- Contents -->
-                <Nuxt />
-
-            </b-col>
+            </b-col> -->
 
         </b-row>
     </b-container>
@@ -160,19 +165,39 @@ body {
     font-family: 'Poppins';
 }
 
-.brand-text {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 2rem;
+.card-shadow {
+    box-shadow: 20px 20px 40px -15px rgb(0 0 0 / 15%);
 }
 
-.list-group-item {
-    background-color: transparent !important;
-    border: none;
+.brand-text {
     color: white;
-    font-size: 1.3rem;
-    font-weight: 300;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1em;
+}
+
+.sidenav {
+    background-color: #1D1D1D;
+}
+
+.nav-side-link {
+    color: white;
+    font-weight: 400;
+}
+
+a:hover {
+    color: white !important;
+    text-decoration: none;
+}
+
+.nav-side-link:hover {
+    border-right: 4px solid #FFFF;
+    font-weight: 600;
+}
+
+.sidebar-divider {
+    border-top: 1px solid #ffffff;
+    margin: 2rem 1.4rem;
 }
 
 .icon-nav {
@@ -180,18 +205,12 @@ body {
     height: 1.5rem;
 }
 
-.sidebar-divider {
-    border-top: 1px solid #ffffff;
-    margin: 0 1.2rem;
-}
-
 .list-group-item.active {
     font-weight: 600;
 }
 
 .navbar-border {
-    border-bottom: 1px solid #B4B4B4;
-    background: #F5F5F5;
+    background: #ffffff;
 }
 
 a.dropdown-toggle {

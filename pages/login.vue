@@ -1,30 +1,26 @@
 <template>
-    <b-row align-v="center" align-h="center">
-        <transition name="page" mode="out-in">
-            <b-col align-self="center" cols="auto">
-                <h1 class="text-center">Selamat datang!</h1>
-                <p class="text-center" style="color: #8f8f8f;">Masukan email dan password anda.</p>
+    <transition name="page" mode="out-in">
+        <b-col cols="auto" class="p-0">
+            <p class="text-center fs-1">Selamat datang!</p>
 
-                <b-form class="mt-4" @submit.prevent="userLogin">
-
-                    <!-- Email -->
-                    <b-form-group id="email" label="Email" label-for="input-email">
-                        <b-form-input id="email" type="email" placeholder="Masukan email" required
-                            v-model="login.email"></b-form-input>
-                    </b-form-group>
-                    <!-- Password -->
-                    <b-form-group id="password" label="Password" label-for="input-password">
-                        <b-form-input id="password" type="password" placeholder="Masukan password" required
-                            v-model="login.password"></b-form-input>
-                    </b-form-group>
-                    <b-button type="submit" block variant="dark" class="mt-4">Masuk</b-button>
-                    <p class="mt-3 text-center" style="color: #8f8f8f;">Baru di PPI Database? <NuxtLink
-                            :to="{ name: 'register' }">Daftar</NuxtLink>
-                    </p>
-                </b-form>
-            </b-col>
-        </transition>
-    </b-row>
+            <b-form class="mt-4" @submit.prevent="userLogin">
+                <!-- Email -->
+                <b-form-group id="email" label="Email" label-for="input-email">
+                    <b-form-input id="email" type="email" placeholder="Masukan email" required
+                        v-model="login.email"></b-form-input>
+                </b-form-group>
+                <!-- Password -->
+                <b-form-group id="password" label="Password" label-for="input-password">
+                    <b-form-input id="password" type="password" placeholder="Masukan password" required
+                        v-model="login.password"></b-form-input>
+                </b-form-group>
+                <b-button type="submit" block variant="dark" class="mt-4">Masuk</b-button>
+                <p class="mt-3 text-center" style="color: #8f8f8f;">Baru di PPI Database? <NuxtLink
+                        :to="{ name: 'register' }">Daftar</NuxtLink>
+                </p>
+            </b-form>
+        </b-col>
+    </transition>
 </template>
 
 <script>
