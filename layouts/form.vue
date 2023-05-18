@@ -13,8 +13,8 @@
             </b-col>
             <b-col class="m-2 d-none d-md-flex">
                 <b-img fluid-grow src="/img/login_img.jpg" style="
-                        height: 63rem; 
-                        width: 84rem; 
+                        height: 95vh; 
+                        width: auto; 
                         object-fit: cover;
                         border-radius: 1rem;"></b-img>
             </b-col>

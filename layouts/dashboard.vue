@@ -84,14 +84,15 @@
                                 <b-nav-item-dropdown right>
                                     <!-- Using 'button-content' slot -->
                                     <template #button-content>
-                                        <a style="font-weight: 600; color: #1D1D1D; font-size: 1.4rem; padding: 0;">Hasbiy
-                                            R</a>
+                                        <a style="font-weight: 600; color: #1D1D1D; font-size: 1.4rem; padding: 0;">
+                                            {{ name }}
+                                        </a>
                                     </template>
                                     <b-dropdown-item href="#">Profile</b-dropdown-item>
                                     <b-dropdown-item @click="logout">Sign
                                         Out</b-dropdown-item>
                                 </b-nav-item-dropdown>
-                                <b-nav-text class="py-0" style="font-weight: 500; color: #9E9E9E;">Admin</b-nav-text>
+                                <b-nav-text class="py-0" style="font-weight: 500; color: #9E9E9E;">{{ role }}</b-nav-text>
                             </b-col>
                         </b-row>
                     </b-navbar-nav>
@@ -135,7 +136,9 @@ export default {
     name: 'dashboard',
     data() {
         return {
-            url: process.env.BASE_URL
+            url: process.env.BASE_URL,
+            name: this.$auth.user.name,
+            role: this.$auth.user.role.name,
         }
     },
     methods: {
