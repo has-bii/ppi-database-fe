@@ -11,7 +11,7 @@
                     <b-col class="card-shadow card-form p-3 mr-3">
                         <b-skeleton-img v-if="$fetchState.pending" no-aspect class="database-photo"></b-skeleton-img>
                         <img v-else-if="photo_name == null" src="/img/dummy-profile.png" class="database-photo">
-                        <img v-else :src="getImageUrl(photo_name)" class="database-photo">
+                        <img v-else :src="getImageUrl(this.$auth.user.student.photo)" class="database-photo">
                     </b-col>
 
                     <!-- Requirements -->
@@ -273,6 +273,13 @@ export default {
 
             this.uploadFile(1)
 
+            let fileType = this.file1.type
+
+            event.target.value = '';
+            this.file1 = null;
+
+            this.photo_name = 'storage/photos/' + this.$auth.user.id + '_img.' + fileType.split('/').pop();
+
             await this.$auth.fetchUser()
         },
         selectIkametFile(event) {
@@ -289,6 +296,9 @@ export default {
 
             let fileType = this.file2.type
 
+            event.target.value = '';
+            this.file2 = null;
+
             this.ikamet = 'storage/ikamet/' + this.$auth.user.id + '_ikamet.' + fileType.split('/').pop();
         },
         selectObelFile(event) {
@@ -304,6 +314,9 @@ export default {
             this.uploadFile(3)
 
             let fileType = this.file3.type
+
+            event.target.value = '';
+            this.file3 = null;
 
             this.obel_name = 'storage/obel/' + this.$auth.user.id + '_obel.' + fileType.split('/').pop();
         },
