@@ -136,7 +136,7 @@
                         <b-col align-self="center" cols="auto" class="p-4 px-5 user-box">
                             <b-img center :src="getUrl(photo)" rounded="circle" class="profile-img"
                                 style="object-fit: cover;"></b-img>
-                            <p class="fs-5 text-center user-text mb-0 mt-2">{{ name }}</p>
+                            <p class="fs-5 text-center user-text mb-0 mt-2">{{ this.$auth.user.student.short_name }}</p>
                             <p class="fs-6 text-center user-text-role mb-0">{{ this.$auth.user.role.name }}</p>
                         </b-col>
                     </b-row>
