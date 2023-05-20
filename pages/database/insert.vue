@@ -1,87 +1,94 @@
 <template>
-    <b-row class="mt-4 pl-3">
-        <b-col lg="8" class="card">
+    <!-- Contents -->
+    <b-row class="px-2 flex-grow-1">
 
-            <b-row class="card-body">
-                <b-col>
+        <!-- Form Data diri -->
+        <b-col cols="12" xl="6" class="mt-4">
+            <b-form class="card-shadow card-form px-5 py-4">
 
-                    <form @submit.prevent="updateRecord">
-                        <div class="mb-3">
-                            <label for="inputName" class="form-label">Nama lengkap</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <input v-else type="text" class="form-control" id="inputName" v-model="name"
-                                placeholder="Masukan nama lengkap" required>
-                        </div>
+                <p class="fs-3 form-title">Data diri</p>
 
-                        <div class="mb-3">
-                            <label for="inputEmail" class="form-label">Alamat email</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <input v-else type="email" class="form-control" id="inputEmail" required v-model="email"
-                                placeholder="Masukan alamat email">
-                        </div>
+                <div class="mb-3">
+                    <label for="inputName" class="form-label">Nama lengkap</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <input v-else type="text" class="form-control" id="inputName" v-model="name"
+                        placeholder="Masukan nama lengkap" required>
+                </div>
 
-                        <label for="selectGender" class="form-label">Jenis kelamin</label>
-                        <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                        <select v-else v-model="jenis_kelamin" id="selectGender" required class="form-select mb-3">
-                            <option selected>Pilih jenis kelamin anda</option>
-                            <option value="Laki-laki">Laki-laki</option>
-                            <option value="Perempuan">Perempuan</option>
-                        </select>
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">Alamat email</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <input v-else type="email" class="form-control" id="inputEmail" required v-model="email"
+                        placeholder="Masukan alamat email">
+                </div>
 
-                        <div class="mb-3">
-                            <label for="inputAgama" class="form-label">Agama</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <input v-else type="text" class="form-control" id="inputAgama" required v-model="agama"
-                                placeholder="Masukan agama yang dianut">
-                        </div>
+                <label for="selectGender" class="form-label">Jenis kelamin</label>
+                <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                <select v-else v-model="jenis_kelamin" id="selectGender" required class="form-select mb-3">
+                    <option selected>Pilih jenis kelamin anda</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
 
-                        <div class="mb-3">
-                            <label for="inputTempatLahir" class="form-label">Tempat Lahir</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <input v-else type="text" class="form-control" id="inputTempatLahir" required
-                                v-model="tempat_lahir" placeholder="Masukan kota tempat anda lahir">
-                        </div>
+                <div class="mb-3">
+                    <label for="inputAgama" class="form-label">Agama</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <input v-else type="text" class="form-control" id="inputAgama" required v-model="agama"
+                        placeholder="Masukan agama yang dianut">
+                </div>
 
-                        <div class="mb-3">
-                            <label for="inputDate" class="form-label">Tanggal Lahir</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <input v-else type="date" id="inputDate" class="form-control" required v-model="tanggal_lahir">
-                        </div>
+                <div class="mb-3">
+                    <label for="inputTempatLahir" class="form-label">Tempat Lahir</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <input v-else type="text" class="form-control" id="inputTempatLahir" required v-model="tempat_lahir"
+                        placeholder="Masukan kota tempat anda lahir">
+                </div>
 
-                        <div class="mb-3">
-                            <label for="inputProvinsiIndonesia" class="form-label">Provinsi Indonesia</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <input v-else type="text" class="form-control" id="inputProvinsiIndonesia" required
-                                v-model="provinsi_indonesia" placeholder="Masukan provinsi Indonesia anda">
-                        </div>
+                <div class="mb-3">
+                    <label for="inputDate" class="form-label">Tanggal Lahir</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <input v-else type="date" id="inputDate" class="form-control" required v-model="tanggal_lahir">
+                </div>
 
-                        <div class="mb-3">
-                            <label for="inputKotaAsal" class="form-label">Asal kota</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <input v-else type="text" class="form-control" id="inputKotaAsal" required
-                                v-model="kota_asal_indonesia" placeholder="Masukan asal kota Indonesia anda">
-                        </div>
-
-                        <div>
-                            <label for="inputAlamatIndonesia" class="form-label">Alamat lengkap Indonesia</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <textarea v-else class="form-control" id="inputAlamatIndonesia" rows="3" required
-                                v-model="alamat_lengkap_indonesia" placeholder="Alamat lengkap di Indonesia"></textarea>
-                        </div>
-
-                        <b-row align-h="end">
-                            <b-col align-self="end" cols="auto">
-                                <b-button variant="dark" class="mt-4" type="submit">Selanjutnya</b-button>
-                            </b-col>
-                        </b-row>
-
-                    </form>
-
-
-                </b-col>
-            </b-row>
-
+            </b-form>
         </b-col>
+
+        <!-- Form Alamat indonesia -->
+        <b-col cols="12" xl="6" class="mt-4">
+            <b-form class="card-shadow card-form px-5 py-4" @submit.prevent="updateRecord">
+
+                <p class="fs-3 form-title">Alamat Indonesia</p>
+
+                <div class="mb-3">
+                    <label for="inputProvinsiIndonesia" class="form-label">Provinsi Indonesia</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <input v-else type="text" class="form-control" id="inputProvinsiIndonesia" required
+                        v-model="provinsi_indonesia" placeholder="Masukan provinsi Indonesia anda">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputKotaAsal" class="form-label">Asal kota</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <input v-else type="text" class="form-control" id="inputKotaAsal" required v-model="kota_asal_indonesia"
+                        placeholder="Masukan asal kota Indonesia anda">
+                </div>
+
+                <div>
+                    <label for="inputAlamatIndonesia" class="form-label">Alamat lengkap Indonesia</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <textarea v-else class="form-control" id="inputAlamatIndonesia" rows="3" required
+                        v-model="alamat_lengkap_indonesia" placeholder="Alamat lengkap di Indonesia"></textarea>
+                </div>
+
+                <b-row align-h="end">
+                    <b-col align-self="end" cols="auto">
+                        <b-button variant="dark" class="mt-4" type="submit">Selanjutnya</b-button>
+                    </b-col>
+                </b-row>
+
+            </b-form>
+        </b-col>
+
     </b-row>
 </template>
 

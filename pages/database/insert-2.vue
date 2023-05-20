@@ -1,86 +1,91 @@
 <template>
-    <b-row class="mt-4 pl-3">
-        <b-col lg="8" class="card">
+    <b-row class="px-2 flex-grow-1">
 
-            <b-row class="card-body">
-                <b-col>
+        <!-- Form Data diri -->
+        <b-col cols="12" xl="6" class="mt-4">
+            <b-form class="card-shadow card-form px-5 py-4">
 
-                    <form @submit.prevent="updateRecord">
-                        <label for="selectPpi" class="form-label">PPI cabang di Turki</label>
-                        <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                        <select v-else id="selectPpi" class="form-select mb-3" v-model="ppi_id" required>
-                            <option value="">Pilih PPI wilayah</option>
-                            <option v-for="ppi in ppis.data.result.data" :value="ppi.id">{{ ppi.name }}</option>
-                        </select>
+                <p class="fs-3 form-title">Alamat Turki</p>
 
-                        <div class="mb-3">
-                            <label for="inputWhatsapp" class="form-label">Nomor Whatsapp</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <input v-else type="text" class="form-control" id="inputWhatsapp" v-model="whatsapp"
-                                placeholder="Masukkan no whatsapp anda" aria-labelledby="whatsappHelp" required>
-                            <div id="whatsappHelp" class="form-text">
-                                Dengan awalan kode negara. Contoh +90 / +62.
-                            </div>
-                        </div>
+                <label for="selectPpi" class="form-label">PPI cabang di Turki</label>
+                <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                <select v-else id="selectPpi" class="form-select mb-3" v-model="ppi_id" required>
+                    <option value="">Pilih PPI wilayah</option>
+                    <option v-for="ppi in ppis.data.result.data" :value="ppi.id">{{ ppi.name }}</option>
+                </select>
 
-                        <div class="mb-3">
-                            <label for="inputNoAktif" class="form-label">Nomor Aktif</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <input v-else type="text" class="form-control" id="inputNoAktif" v-model="no_aktif"
-                                placeholder="Masukkan nomor aktif yang dapat dihubungi" aria-labelledby="noHelp" required>
-                            <div id="noHelp" class="form-text">
-                                Dengan awalan kode negara. Contoh +90 / +62.
-                            </div>
-                        </div>
+                <div class="mb-3">
+                    <label for="inputKedatangan" class="form-label">Tahun kedatangan ke Turki</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <input v-else type="text" id="inputDate" class="form-control"
+                        placeholder="Masukan tahun kedatangan ke Turki" v-model="tahun_masuk" required>
+                </div>
 
-                        <div class="mb-3">
-                            <label for="inputKedatangan" class="form-label">Tahun kedatangan ke Turki</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <input v-else type="text" id="inputDate" class="form-control"
-                                placeholder="Masukan tahun kedatangan ke Turki" v-model="tahun_masuk" required>
-                        </div>
+                <label for="selectTempatTinggal" class="form-label">Tempat tinggal</label>
+                <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                <select v-else id="selectGender" class="form-select mb-3" v-model="tempat_tinggal" required>
+                    <option selected>Pilih tempat tinggal di Turki</option>
+                    <option value="Apartemen">Apartemen</option>
+                    <option value="Asrama">Asrama</option>
+                </select>
 
-                        <label for="selectTempatTinggal" class="form-label">Tempat tinggal</label>
-                        <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                        <select v-else id="selectGender" class="form-select mb-3" v-model="tempat_tinggal" required>
-                            <option selected>Pilih tempat tinggal di Turki</option>
-                            <option value="Apartemen">Apartemen</option>
-                            <option value="Asrama">Asrama</option>
-                        </select>
+                <label for="selectKotaTurki" class="form-label">Kota Turki</label>
+                <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                <select v-else id="selectKotaTurki" class="form-select mb-3" v-model="kota_turki_id" required>
+                    <option value="">Pilih kota tempat tinggal di Turki</option>
+                    <option v-for="kotaturki in kota_turkis.data.result.data" :value="kotaturki.id">
+                        {{ kotaturki.name }}
+                    </option>
+                </select>
 
-                        <label for="selectKotaTurki" class="form-label">Kota Turki</label>
-                        <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                        <select v-else id="selectKotaTurki" class="form-select mb-3" v-model="kota_turki_id" required>
-                            <option value="">Pilih kota tempat tinggal di Turki</option>
-                            <option v-for="kotaturki in kota_turkis.data.result.data" :value="kotaturki.id">
-                                {{ kotaturki.name }}
-                            </option>
-                        </select>
+                <div class="mb-3">
+                    <label for="inputAlamatTurki" class="form-label">Alamat lengkap Turki</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <textarea v-else class="form-control" id="inputAlamatTurki" rows="3" v-model="alamat_turki" required
+                        placeholder="Alamat lengkap di Turki"></textarea>
+                </div>
 
-                        <div class="mb-3">
-                            <label for="inputAlamatTurki" class="form-label">Alamat lengkap Turki</label>
-                            <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                            <textarea v-else class="form-control" id="inputAlamatTurki" rows="3" v-model="alamat_turki"
-                                required placeholder="Alamat lengkap di Turki"></textarea>
-                        </div>
-
-
-                        <!-- Button -->
-                        <b-row align-h="end">
-                            <b-col align-self="end" cols="auto">
-                                <b-button variant="outline-dark" class="mt-4"
-                                    :to="{ name: 'database-insert' }">kembali</b-button>
-                                <b-button variant="dark" class="mt-4" type="submit">Selanjutnya</b-button>
-                            </b-col>
-                        </b-row>
-
-                    </form>
-
-
-                </b-col>
-            </b-row>
-
+            </b-form>
         </b-col>
+
+        <!-- Form Kontak Aktif -->
+        <b-col cols="12" xl="6" class="mt-4">
+            <b-form class="card-shadow card-form px-5 py-4" @submit.prevent="updateRecord">
+
+                <p class="fs-3 form-title">Kontak aktif</p>
+
+                <div class="mb-3">
+                    <label for="inputWhatsapp" class="form-label">Nomor Whatsapp</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <input v-else type="text" class="form-control" id="inputWhatsapp" v-model="whatsapp"
+                        placeholder="Masukkan no whatsapp anda" aria-labelledby="whatsappHelp" required>
+                    <div id="whatsappHelp" class="form-text">
+                        Dengan awalan kode negara. Contoh +90 / +62.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputNoAktif" class="form-label">Nomor Aktif</label>
+                    <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
+                    <input v-else type="text" class="form-control" id="inputNoAktif" v-model="no_aktif"
+                        placeholder="Masukkan nomor aktif yang dapat dihubungi" aria-labelledby="noHelp" required>
+                    <div id="noHelp" class="form-text">
+                        Dengan awalan kode negara. Contoh +90 / +62.
+                    </div>
+                </div>
+
+
+                <!-- Button -->
+                <b-row align-h="end">
+                    <b-col align-self="end" cols="auto">
+                        <b-button variant="outline-dark" class="mt-4" :to="{ name: 'database-insert' }">kembali</b-button>
+                        <b-button variant="dark" class="mt-4" type="submit">Selanjutnya</b-button>
+                    </b-col>
+                </b-row>
+
+            </b-form>
+        </b-col>
+
     </b-row>
 </template>
 

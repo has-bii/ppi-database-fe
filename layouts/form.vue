@@ -16,7 +16,7 @@
             </b-col>
 
             <b-col xl="8" lg="7" align-self="center" class="pr-4 pl-0 d-none d-lg-block">
-                <b-img fluid-grow src=" /img/login_img.jpg"
+                <b-img fluid-grow src="/img/login_img.jpg"
                     style="border-radius: 1rem; object-fit: cover; height: 95vh;"></b-img>
             </b-col>
         </b-row>
