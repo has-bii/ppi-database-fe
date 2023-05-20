@@ -42,10 +42,20 @@
                     <!-- User -->
                     <b-row align-h="center">
                         <b-col align-self="center" cols="auto" class="p-4 px-5 user-box">
-                            <b-img center :src="getUrl(photo)" rounded="circle" class="profile-img"
+                            <b-skeleton-img v-if="$fetchState.pending" rounded="circle"
+                                class="profile-img"></b-skeleton-img>
+                            <b-img v-else-if="user.data.result.student.photo == null" center
+                                src="/img/dummy-profile-pic.png" rounded="circle" class="profile-img"
                                 style="object-fit: cover;"></b-img>
-                            <p class="fs-5 text-center user-text mb-0 mt-2">{{ name }}</p>
-                            <p class="fs-6 text-center user-text-role mb-0">{{ this.$auth.user.role.name }}</p>
+                            <b-img v-else center :src="getUrl(user.data.result.student.photo)" rounded="circle"
+                                class="profile-img" style="object-fit: cover;"></b-img>
+                            <b-skeleton v-if="$fetchState.pending"></b-skeleton>
+                            <p v-else-if="$fetchState.error" class="fs-5 text-center user-text mb-0 mt-2">Error</p>
+                            <p v-else class="fs-5 text-center user-text mb-0 mt-2">{{ user.data.result.student.short_name }}
+                            </p>
+                            <b-skeleton v-if="$fetchState.pending"></b-skeleton>
+                            <p v-else-if="$fetchState.error" class="fs-6 text-center user-text-role mb-0">Error</p>
+                            <p v-else class="fs-6 text-center user-text-role mb-0">{{ user.data.result.role.name }}</p>
                         </b-col>
                     </b-row>
 
@@ -134,10 +144,20 @@
                     <!-- User -->
                     <b-row align-h="center">
                         <b-col align-self="center" cols="auto" class="p-4 px-5 user-box">
-                            <b-img center :src="getUrl(photo)" rounded="circle" class="profile-img"
+                            <b-skeleton-img v-if="$fetchState.pending" rounded="circle"
+                                class="profile-img"></b-skeleton-img>
+                            <b-img v-else-if="user.data.result.student.photo == null" center
+                                src="/img/dummy-profile-pic.png" rounded="circle" class="profile-img"
                                 style="object-fit: cover;"></b-img>
-                            <p class="fs-5 text-center user-text mb-0 mt-2">{{ this.$auth.user.student.short_name }}</p>
-                            <p class="fs-6 text-center user-text-role mb-0">{{ this.$auth.user.role.name }}</p>
+                            <b-img v-else center :src="getUrl(user.data.result.student.photo)" rounded="circle"
+                                class="profile-img" style="object-fit: cover;"></b-img>
+                            <b-skeleton v-if="$fetchState.pending"></b-skeleton>
+                            <p v-else-if="$fetchState.error" class="fs-5 text-center user-text mb-0 mt-2">Error</p>
+                            <p v-else class="fs-5 text-center user-text mb-0 mt-2">{{ user.data.result.student.short_name }}
+                            </p>
+                            <b-skeleton v-if="$fetchState.pending"></b-skeleton>
+                            <p v-else-if="$fetchState.error" class="fs-6 text-center user-text-role mb-0">Error</p>
+                            <p v-else class="fs-6 text-center user-text-role mb-0">{{ user.data.result.role.name }}</p>
                         </b-col>
                     </b-row>
 
@@ -162,10 +182,19 @@ export default {
     data() {
         return {
             url: process.env.BASE_URL,
-            name: this.$auth.user.student.short_name,
-            role: this.$auth.user.role.name,
-            photo: this.$auth.user.student.photo
+            user: ''
         }
+    },
+    async fetch() {
+
+        try {
+            this.user = await this.$axios.get('user')
+
+            console.log(user)
+        } catch (error) {
+            console.log(error)
+        }
+
     },
     methods: {
         async logout() {
@@ -339,5 +368,4 @@ a:hover {
 
 .text-dark {
     color: #fff !important;
-}
-</style>
+}</style>
