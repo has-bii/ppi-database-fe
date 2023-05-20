@@ -44,7 +44,7 @@
                         <b-col align-self="center" cols="auto" class="p-4 px-5 user-box">
                             <b-img center :src="getUrl(photo)" rounded="circle" class="profile-img"
                                 style="object-fit: cover;"></b-img>
-                            <p class="fs-5 text-center user-text mb-0 mt-2">{{ this.$auth.user.name }}</p>
+                            <p class="fs-5 text-center user-text mb-0 mt-2">{{ name }}</p>
                             <p class="fs-6 text-center user-text-role mb-0">{{ this.$auth.user.role.name }}</p>
                         </b-col>
                     </b-row>
@@ -136,7 +136,7 @@
                         <b-col align-self="center" cols="auto" class="p-4 px-5 user-box">
                             <b-img center :src="getUrl(photo)" rounded="circle" class="profile-img"
                                 style="object-fit: cover;"></b-img>
-                            <p class="fs-5 text-center user-text mb-0 mt-2">{{ this.$auth.user.name }}</p>
+                            <p class="fs-5 text-center user-text mb-0 mt-2">{{ name }}</p>
                             <p class="fs-6 text-center user-text-role mb-0">{{ this.$auth.user.role.name }}</p>
                         </b-col>
                     </b-row>
@@ -162,7 +162,7 @@ export default {
     data() {
         return {
             url: process.env.BASE_URL,
-            name: this.$auth.user.name,
+            name: this.$auth.user.student.short_name,
             role: this.$auth.user.role.name,
             photo: this.$auth.user.student.photo
         }
