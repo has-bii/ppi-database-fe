@@ -44,9 +44,8 @@
                         <b-col align-self="center" cols="auto" class="p-4 px-5 user-box">
                             <b-skeleton-img v-if="$fetchState.pending" rounded="circle"
                                 class="profile-img"></b-skeleton-img>
-                            <b-img v-else-if="user.data.result.student.photo == null" center
-                                src="/img/dummy-profile-pic.png" rounded="circle" class="profile-img"
-                                style="object-fit: cover;"></b-img>
+                            <b-img v-else-if="user.data.result.student.photo == null" center src="/img/dummy-profile.png"
+                                rounded="circle" class="profile-img" style="object-fit: cover;"></b-img>
                             <b-img v-else center :src="getUrl(user.data.result.student.photo)" rounded="circle"
                                 class="profile-img" style="object-fit: cover;"></b-img>
                             <b-skeleton v-if="$fetchState.pending"></b-skeleton>
@@ -146,9 +145,8 @@
                         <b-col align-self="center" cols="auto" class="p-4 px-5 user-box">
                             <b-skeleton-img v-if="$fetchState.pending" rounded="circle"
                                 class="profile-img"></b-skeleton-img>
-                            <b-img v-else-if="user.data.result.student.photo == null" center
-                                src="/img/dummy-profile-pic.png" rounded="circle" class="profile-img"
-                                style="object-fit: cover;"></b-img>
+                            <b-img v-else-if="user.data.result.student.photo == null" center src="/img/dummy-profile.png"
+                                rounded="circle" class="profile-img" style="object-fit: cover;"></b-img>
                             <b-img v-else center :src="getUrl(user.data.result.student.photo)" rounded="circle"
                                 class="profile-img" style="object-fit: cover;"></b-img>
                             <b-skeleton v-if="$fetchState.pending"></b-skeleton>
@@ -368,4 +366,5 @@ a:hover {
 
 .text-dark {
     color: #fff !important;
-}</style>
+}
+</style>
