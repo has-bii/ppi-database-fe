@@ -11,6 +11,7 @@
                     <b-col class="card-shadow card-form p-3 mr-3">
                         <b-skeleton-img v-if="$fetchState.pending" no-aspect class="database-photo"></b-skeleton-img>
                         <img v-else-if="photo_name == null" src="/img/dummy-profile.png" class="database-photo">
+                        <img v-else-if="uploadedPhoto" :src="uploadedPhoto" class="database-photo">
                         <img v-else :src="getImageUrl(this.$auth.user.student.photo)" class="database-photo">
                     </b-col>
 
@@ -24,9 +25,15 @@
                                 </li>
                             </ol>
                             <div class="d-flex flex-row mt-auto justify-content-center">
-                                <b-button variant="light" class="mx-2 px-4" :href="getImageUrl(ikamet)" target="_blank">Buka
+                                <b-button v-if="!ikamet" variant="light" class="mx-2 px-4" disabled>Buka
                                     ikamet</b-button>
-                                <b-button variant="dark" class="mx-2 px-4" :href="getImageUrl(obel)" target="_blank">Buka
+                                <b-button v-else variant="light" class="mx-2 px-4" :href="getImageUrl(ikamet)"
+                                    target="_blank">Buka
+                                    ikamet</b-button>
+                                <b-button v-if="!ikamet" variant="dark" class="mx-2 px-4" disabled>Buka
+                                    Obel</b-button>
+                                <b-button v-else variant="dark" class="mx-2 px-4" :href="getImageUrl(obel)"
+                                    target="_blank">Buka
                                     Obel</b-button>
                             </div>
                         </div>
@@ -44,20 +51,20 @@
                         <label for="filePhoto" class="form-label">Pas Foto</label>
                         <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
                         <input v-else class="form-control" accept=".jpeg,.jpg,.png,image/jpeg,image/png" type="file"
-                            max="1MB" v-on:change="selectPhotoFile" id="filePhoto">
+                            v-on:change="selectPhotoFile" id="filePhoto">
                     </div>
 
                     <div class="mb-4">
                         <label for="fileIkamet" class="form-label">File ikamet:</label>
                         <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                        <input v-else class="form-control" type="file" accept=".pdf" id="fileIkamet" max="1MB"
+                        <input v-else class="form-control" type="file" accept=".pdf" id="fileIkamet"
                             v-on:change="selectIkametFile">
                     </div>
 
                     <div class="mb-4">
                         <label for="fileObel" class="form-label">File öğrenci belgesi</label>
                         <b-skeleton v-if="$fetchState.pending" type="input"></b-skeleton>
-                        <input v-else class="form-control" type="file" id="fileObel" accept=".pdf" max="1MB"
+                        <input v-else class="form-control" type="file" id="fileObel" accept=".pdf"
                             v-on:change="selectObelFile">
                     </div>
 
@@ -93,7 +100,7 @@
                 <select v-else id="selectJurusan" name="selectJurusan" class="form-select mb-3" @click="fetchJurusans"
                     v-model="jurusan_id">
                     <option value="">Pilih jurusan</option>
-                    <option v-for="jurusan in jurusans" :value="jurusan.id">{{ jurusan.name }}</option>
+                    <option v-for="jurusan in jurusans" :key="jurusan.id" :value="jurusan.id">{{ jurusan.name }}</option>
                 </select>
 
                 <label for="selectJenjang" class="form-label">Jenjang pendidikan</label>
@@ -146,6 +153,7 @@ export default {
             file2: null,
             file3: null,
             photo_name: '',
+            uploadedPhoto: '',
             ikamet: '',
             obel: '',
         }
@@ -271,6 +279,8 @@ export default {
                 return;
             }
 
+            this.readImage(this.file1)
+
             this.uploadFile(1)
 
             let fileType = this.file1.type
@@ -281,6 +291,14 @@ export default {
             this.photo_name = 'storage/photos/' + this.$auth.user.id + '_img.' + fileType.split('/').pop();
 
             await this.$auth.fetchUser()
+        },
+        readImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.uploadedPhoto = e.target.result;
+            }
+
+            reader.readAsDataURL(file);
         },
         selectIkametFile(event) {
             this.file2 = event.target.files[0]
